@@ -12,19 +12,24 @@ import android.widget.TextView;
 
 public class CurrentNumFragment extends Fragment {
 
-    private String number;
+    private final String number;
 
-    public CurrentNumFragment() {
+    public CurrentNumFragment(String number) {
+        this.number = number;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
-        return inflater.inflate(R.layout.fragment_current_num, container, false);
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
+       View view = inflater.inflate(R.layout.fragment_current_num, container, false);
+        TextView mTextView = view.findViewById(R.id.current_number);
+        mTextView.setText(number);
+        return view;
     }
 
     @Override

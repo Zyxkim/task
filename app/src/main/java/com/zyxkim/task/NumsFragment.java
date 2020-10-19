@@ -3,7 +3,6 @@ package com.zyxkim.task;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,8 +115,7 @@ public class NumsFragment extends Fragment {
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Fragment fragment = new CurrentNumFragment();
-                    ((CurrentNumFragment) fragment).setNumber(textView.getText().toString());
+                    Fragment fragment = new CurrentNumFragment(textView.getText().toString());
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.placeholder, fragment);
                     fragmentTransaction.addToBackStack(null);
