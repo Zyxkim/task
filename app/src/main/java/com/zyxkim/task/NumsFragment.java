@@ -23,6 +23,7 @@ public class NumsFragment extends Fragment {
     private static final int START_LIST = 100;
     private static final int HORIZONTAL_COLUMNS = 4;
     private static final int VERTICAL_COLUMNS = 3;
+    private final String EXTRA = "data";
 
     private int counter = START_LIST;
     private final ArrayList<DataSource> listData = new ArrayList<>();
@@ -36,7 +37,7 @@ public class NumsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if(savedInstanceState != null)
-            counter = savedInstanceState.getInt("data");
+            counter = savedInstanceState.getInt(EXTRA);
 
         for (int i = 0; i <= counter-1; i++)
             listData.add(new DataSource(Integer.toString(i+1)));
@@ -73,7 +74,7 @@ public class NumsFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("data", counter);
+        outState.putInt(EXTRA, counter);
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyHolder> {
