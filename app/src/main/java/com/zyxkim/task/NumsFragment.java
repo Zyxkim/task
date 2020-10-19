@@ -20,7 +20,11 @@ import java.util.ArrayList;
 
 public class NumsFragment extends Fragment {
 
-    private int counter = 100;
+    private static final int START_LIST = 100;
+    private static final int HORIZONTAL_COLUMNS = 4;
+    private static final int VERTICAL_COLUMNS = 3;
+
+    private int counter = START_LIST;
     private final ArrayList<DataSource> listData = new ArrayList<>();
     private final MyAdapter adapter = new MyAdapter(listData);
 
@@ -50,13 +54,11 @@ public class NumsFragment extends Fragment {
         RecyclerView list = view.findViewById(R.id.recyclerView);
         list.setAdapter(adapter);
 
-        int columns;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            columns = 4;
+            list.setLayoutManager(new GridLayoutManager(view.getContext(), HORIZONTAL_COLUMNS));
         } else {
-            columns = 3;
+            list.setLayoutManager(new GridLayoutManager(view.getContext(), VERTICAL_COLUMNS));
         }
-        list.setLayoutManager(new GridLayoutManager(view.getContext(), columns));
 
         butOpen.setOnClickListener(new View.OnClickListener() {
             @Override
