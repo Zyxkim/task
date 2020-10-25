@@ -30,8 +30,12 @@ public class CurrentNumFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_current_num, container, false);
         mTextView = view.findViewById(R.id.current_number);
         Bundle bundle = getArguments();
-        int number = bundle.getInt(NUM_EXTRA);
-        mTextView.setText(String.valueOf(number));
+
+        int number = -1;
+        if (bundle != null) {
+            number = bundle.getInt(NUM_EXTRA);
+            mTextView.setText(String.valueOf(number));
+        }
 
         if (number % 2 == 0) {
             mTextView.setTextColor(Color.RED);

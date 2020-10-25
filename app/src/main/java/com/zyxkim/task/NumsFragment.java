@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -102,15 +101,10 @@ public class NumsFragment extends Fragment {
 
             holder.textView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Fragment fragment = new CurrentNumFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(EXTRA, position + 1);
-                    fragment.setArguments(bundle);
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.placeholder, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                public void onClick(View view) {
+                    if (getActivity() instanceof MainActivity) {
+                        ((MainActivity) getActivity()).numberClickListener(position + 1);
+                    }
                 }
             });
         }

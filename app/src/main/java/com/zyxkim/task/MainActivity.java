@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-//динамическое создание активити
-
 public class MainActivity extends AppCompatActivity {
+
+    public final String EXTRA = "data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,5 +17,17 @@ public class MainActivity extends AppCompatActivity {
                     .beginTransaction()
                     .replace(R.id.placeholder, new NumsFragment())
                     .commit();
+    }
+
+    public void numberClickListener(int number) {
+        CurrentNumFragment fragment = new CurrentNumFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(EXTRA, number);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.placeholder, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
