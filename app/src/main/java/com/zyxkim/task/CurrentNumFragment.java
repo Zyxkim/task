@@ -13,13 +13,11 @@ import android.widget.TextView;
 
 public class CurrentNumFragment extends Fragment {
 
-    private final String NUM_EXTRA = "TEST";
+    private final String NUM_EXTRA = "data";
 
-    private final String number;
     private TextView mTextView;
 
-    public CurrentNumFragment(String number) {
-        this.number = number;
+    public CurrentNumFragment() {
     }
 
     @Override
@@ -29,26 +27,19 @@ public class CurrentNumFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setRetainInstance(true);
         View view = inflater.inflate(R.layout.fragment_current_num, container, false);
         mTextView = view.findViewById(R.id.current_number);
-        mTextView.setText(number);
-        return view;
-    }
+        Bundle bundle = getArguments();
+        int number = bundle.getInt(NUM_EXTRA);
+        mTextView.setText(String.valueOf(number));
 
-    @Override
-    public void onStart(){
-        super.onStart();
-        View text = getView();
-        if (text != null) {
-            TextView textView = text.findViewById(R.id.current_number);
-            textView.setText(number);
-            if (Integer.parseInt(number) % 2 == 0) {
-                textView.setTextColor(Color.RED);
-            } else {
-                textView.setTextColor(Color.BLUE);
-            }
+        if (number % 2 == 0) {
+            mTextView.setTextColor(Color.RED);
+        } else {
+            mTextView.setTextColor(Color.BLUE);
         }
+
+        return view;
     }
 
     @Override

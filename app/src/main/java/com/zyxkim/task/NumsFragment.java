@@ -23,7 +23,7 @@ public class NumsFragment extends Fragment {
     private static final int START_LIST = 100;
     private static final int HORIZONTAL_COLUMNS = 4;
     private static final int VERTICAL_COLUMNS = 3;
-    private final String EXTRA = "data";
+    public final String EXTRA = "data";
 
     private int counter = START_LIST;
     private final ArrayList<DataSource> listData = new ArrayList<>();
@@ -92,13 +92,27 @@ public class NumsFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+        public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
             holder.textView.setText(listDataAdapter.get(position).number);
             if ((position + 1) % 2 == 0) {
                 holder.textView.setTextColor(Color.RED);
             } else {
                 holder.textView.setTextColor(Color.BLUE);
             }
+
+            holder.textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment fragment = new CurrentNumFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(EXTRA, position + 1);
+                    fragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.placeholder, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
         }
 
         @Override
@@ -107,24 +121,12 @@ public class NumsFragment extends Fragment {
         }
     }
 
-    class MyHolder extends RecyclerView.ViewHolder {
+    public class MyHolder extends RecyclerView.ViewHolder {
         final TextView textView;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-
             textView = itemView.findViewById(R.id.number);
-
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Fragment fragment = new CurrentNumFragment(textView.getText().toString());
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.placeholder, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                }
-            });
         }
     }
 }
