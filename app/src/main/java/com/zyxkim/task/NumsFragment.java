@@ -22,11 +22,11 @@ public class NumsFragment extends Fragment {
     private static final int START_LIST = 100;
     private static final int HORIZONTAL_COLUMNS = 4;
     private static final int VERTICAL_COLUMNS = 3;
-    public final String EXTRA = "data";
+    private final String EXTRA = "EXTRA";
 
-    private int counter = START_LIST;
-    private final ArrayList<DataSource> listData = new ArrayList<>();
-    private final MyAdapter adapter = new MyAdapter(listData);
+    private int mCounter = START_LIST;
+    private final ArrayList<DataSource> LIST_DATA = new ArrayList<>();
+    private final MyAdapter ADAPTER = new MyAdapter(LIST_DATA);
 
     public NumsFragment() {
     }
@@ -36,10 +36,10 @@ public class NumsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if(savedInstanceState != null)
-            counter = savedInstanceState.getInt(EXTRA);
+            mCounter = savedInstanceState.getInt(EXTRA);
 
-        for (int i = 0; i <= counter-1; i++)
-            listData.add(new DataSource(Integer.toString(i+1)));
+        for (int i = 0; i <= mCounter-1; i++)
+            LIST_DATA.add(new DataSource(Integer.toString(i+1)));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class NumsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button butOpen = view.findViewById(R.id.addBtn);
         RecyclerView list = view.findViewById(R.id.recyclerView);
-        list.setAdapter(adapter);
+        list.setAdapter(ADAPTER);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             list.setLayoutManager(new GridLayoutManager(view.getContext(), HORIZONTAL_COLUMNS));
@@ -63,9 +63,9 @@ public class NumsFragment extends Fragment {
         butOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                counter++;
-                listData.add(new DataSource(Integer.toString(counter)));
-                adapter.notifyItemInserted(counter - 1);
+                mCounter++;
+                LIST_DATA.add(new DataSource(Integer.toString(mCounter)));
+                ADAPTER.notifyItemInserted(mCounter - 1);
             }
         });
     }
@@ -73,14 +73,14 @@ public class NumsFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(EXTRA, counter);
+        outState.putInt(EXTRA, mCounter);
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyHolder> {
-        private final ArrayList<DataSource> listDataAdapter;
+        private final ArrayList<DataSource> LIST_DATA_ADAPTER;
 
         public MyAdapter(ArrayList<DataSource> listDataAdapter) {
-            this.listDataAdapter = listDataAdapter;
+            this.LIST_DATA_ADAPTER = listDataAdapter;
         }
 
         @NonNull
@@ -92,14 +92,14 @@ public class NumsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
-            holder.textView.setText(listDataAdapter.get(position).number);
+            holder.TEXT_VIEW.setText(LIST_DATA_ADAPTER.get(position).NUMBER);
             if ((position + 1) % 2 == 0) {
-                holder.textView.setTextColor(Color.RED);
+                holder.TEXT_VIEW.setTextColor(Color.RED);
             } else {
-                holder.textView.setTextColor(Color.BLUE);
+                holder.TEXT_VIEW.setTextColor(Color.BLUE);
             }
 
-            holder.textView.setOnClickListener(new View.OnClickListener() {
+            holder.TEXT_VIEW.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (getActivity() instanceof MainActivity) {
@@ -111,16 +111,16 @@ public class NumsFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return listDataAdapter.size();
+            return LIST_DATA_ADAPTER.size();
         }
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder {
-        final TextView textView;
+    public static class MyHolder extends RecyclerView.ViewHolder {
+        final TextView TEXT_VIEW;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.number);
+            TEXT_VIEW = itemView.findViewById(R.id.number);
         }
     }
 }

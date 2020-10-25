@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class CurrentNumFragment extends Fragment {
 
-    private final String NUM_EXTRA = "data";
+    private final String EXTRA = "EXTRA";
 
     private TextView mTextView;
 
@@ -33,7 +33,7 @@ public class CurrentNumFragment extends Fragment {
 
         int number = -1;
         if (bundle != null) {
-            number = bundle.getInt(NUM_EXTRA);
+            number = bundle.getInt(EXTRA);
             mTextView.setText(String.valueOf(number));
         }
 
@@ -49,6 +49,6 @@ public class CurrentNumFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(NUM_EXTRA, (String) mTextView.getText());
+        outState.putString(EXTRA, (String) mTextView.getText());
     }
 }

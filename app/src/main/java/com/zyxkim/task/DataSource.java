@@ -1,9 +1,9 @@
 package com.zyxkim.task;
 
 class DataSource {
-    final String number;
+    final String NUMBER;
 
     public DataSource(String number) {
-        this.number = number;
+        this.NUMBER = number;
     }
 }
